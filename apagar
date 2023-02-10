@@ -1,0 +1,19 @@
+#!/bin/bash
+
+yo=`whoami`
+echo $yo
+sleep 15
+
+if [ $yo = "root" ] 
+then
+	dialog --msgbox "Ahora se apagará el sistema porque soy root" 0 0
+	sleep 2
+#halt
+else
+	dialog --msgbox "No eres root así que no puedes apagar el sistem" 0 0
+	dialog --passwordbox "Introduce la contraseña: " 0 0 > contraseña
+	pass = $(cut -fi contraseña)
+	echo
+	dialog --infobox "La contraseña tecleada es $pass" 0 0
+	clear
+fi

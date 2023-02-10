@@ -1,0 +1,49 @@
+#!/bin/bash
+
+mostrarInfo()
+{
+
+        if [ $1 -eq 1 ]
+        then
+                dialog --title "EXISTE" --infobox "El usuario $i existe" 0 0
+        else
+                dialog --title "NO EXISTE" --infobox "El usuario $i no existe" 0 0
+        fi
+
+}
+
+
+
+for i in {1..100}
+do
+	echo $i
+	sleep 0.02
+done | dialog --title "EMPIEZA" --gauge "Iniciando..." 0 0
+
+dialog --title "NOMBRE DE USUARIO" --inputbox "Introduce nombre(s) de usuario(s) (Separados por espacios): " 0 0 2> tmpuser
+user=`cut -f1 tmpuser`
+rm tmpuser
+
+if [ $user -eq 0 ]
+then
+	dialog --title "ERR0R" --infobox "ERR0R 404 - Not found." 0 0
+else
+	for i in $*
+        do
+		for j in {1..100}
+		do
+        		echo $j
+        		sleep 0.02
+		done | dialog --title "VERIFICANDO" --gauge "Verificando si el $i usuario existe..." 0 0
+	id $user 2> /dev/null > /dev/null
+	if [ $? -eq 0 ]
+        then
+		mostrarInfo 0
+     		sleep 2
+        else
+		mostrarInfo 1
+                sleep 2
+	fi
+	done
+	clear
+fi

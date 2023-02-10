@@ -1,0 +1,8 @@
+#!/bin/bash
+
+op=0
+
+while [ $op -ne 5 ]
+do
+	read -p "Introduce opción: " op
+done

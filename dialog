@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# 1
+dialog --title "Mensaje de información" --msgbox "Éste es el mensaje 'Hola'" 0 0
+clear
+
+# 2
+dialog --title "Opción Si No" --yesno "¿Quiere coninúar?" 0 0
+ans=$?
+clear
+if [ $ans -eq 0 ]
+then
+	echo "Respondió si"
+else
+	echo "Respondió no"
+fi
+sleep 1.5
+clear
+
+# 3
+dialog --title "Nombre" --inputbox "¿Cuál es tu nómbre?" 0 0> respuesta
+respuesta=$(cut -f1 respuesta)
+
+# 4
+#dia=$(dialog --title "Día" --inputbox "¿Cuál es tu día de nacimiento")
+
+#mes=$(dialog --title "Día" --inputbox "¿Cuál es tu día de nacimiento")
+
+
+#anio=$(dialog --title "Día" --inputbox "¿Cuál es tu día de nacimiento")
+
+
+respuesta=$(dialog --title "Hora a la que naciste" \
+                   --stdout \
+		   --timebox "Selecciona la hora" 0 0)
+
+# 5
+for i in {1..100}
+do
+	echo $i
+	sleep 0.02
+done | dialog --gauge "Descargando datos..." 0 0
+#respuesta2=$(dialog --title "DATOS USUARIO" \
+#	--separate-widget $"\n"
+#\
+#	--form "Introduce tus datos"
+#\
+#	0 0 0
+#\
+#	"Nombre:" 1 1 "$nombre" 1 10 20 0
+#\
+#	"Apellido:" 2 1 "$apellido" 2 10 20 0
+#\
+#	"Email:" 3 1 "$mail" 3 10 20 0 \
+#	3>$1 1>$2 2>$3 3>&-)
+#	nombre=$(echo "$respuesta2" | sed -n 1p)
+#	apellido=$(echo "$respuesta2" | sed -n 2p)
+#	email=$(echo "$respuesta2" | sed -n 3p)
+#echo "Nombre: $nombre"
+#echo "Apellido: $apellido"
+#echo "Email: $email"
+#read
+#clear
+
+# 6
+respuesta=$(dialog --title "Juego favorito" \
+                  --stdout \
+                  --menu "Cual es tu juego favorito:" 12 20 5 \
+                         1 "Minecraft" \
+                         2 "GTA V" \
+                         3 "Cyberpunk 2077" \
+                         4 "Assasin's Creed Valhalla")
+clear
+echo "Respondiste la opción $respuesta"

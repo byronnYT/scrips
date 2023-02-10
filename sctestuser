@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	echo "ERR00R 404 --> Parámetro no introducido (./script parámetro)"
+elif [ $# -eq 1 ]
+then
+	echo "Identificando user..."
+	sleep 2
+
+if [ $? -eq 0 ]
+then
+	echo "El usuario $1 existe"
+else
+	echo "El usuario $1 no existe"
+fi
+
+else
+	echo "Se han pasado más usuarios de los permitidos"
+fi
+
+
+
+
+
+
+

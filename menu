@@ -1,0 +1,124 @@
+#!/bin/bash
+
+op=$(zenity --list \
+  --column="Opción" --column="Acción" --column="Descripción" \
+  1 Usuarios "Gestionar usuarios" \
+  2 Procesos "Gestionar procesos" \
+  3 Memoria "Visualiza información del sistema")
+
+# Si elge alguna opción
+if [ $? -eq 0 ]
+then
+	case $op in
+		1)
+		op1=$(zenity --list \
+  			--column="Opción" --column="Acción" --column="Descripción" \
+  			1 Crear "Crear usuario" \
+  			2 Borrar "Eliminar usuario" \
+  			3 Listar "Listar usuarios")
+  			if [ $? -eq 0 ]
+			then
+			 	case $op1 in
+			 		1)
+			 		# Solicitar datos
+			 		datos=$(zenity --forms \
+               		--title="Datos de usuario" \
+               		--text="Introduce los siguientes datos" \
+               		--add-entry="Nombre" \
+               		--add-password="Contraseña")
+					respuesta=$?
+					if [ $respuesta -eq 0 ]
+					then
+    					echo "Has introducido los siguientes datos:"
+    					IFS="|" read -r -a array <<< "$datos"
+    					useradd -m -s /bin/bash ${array[0]} 2> /dev/null > /dev/null
+    					echo "${array[0]}:${array[1]}" | chpasswd
+    					(
+    					echo "# Creando usuario..."
+						sleep 0.3
+						echo "10"; sleep 0.3
+						echo "20"; sleep 0.3
+						echo "30"; sleep 0.3
+						echo "# Creando directorio"
+						echo "50"; sleep 0.3
+						echo "70"; sleep 1
+						echo "90"
+						echo "# Finalizado"
+						echo "100"
+						) | 
+						zenity --progress \
+  						--title="Crear usuario" \
+  						--text="Iniciando proceso" \
+  						--percentage=0
+						
+						if [ "$?" = -1 ] ; then
+        						zenity --error \
+          						--text="Cancelado."
+						fi 
+			 			echo "Usuario ${array[0]} creado correctamente"
+					else
+    					zenity --error \
+       						--title="Cancelado" \
+       						--width=250 \
+       						--text="El proceso se ha detenido correctamente"
+							clear
+					fi
+			 		;;
+			 		2)
+			 		;;
+			 		3) (
+			 		echo "# Listando usuarios..."
+					sleep 0.3
+					echo "10"; sleep 0.3
+					echo "20"; sleep 0.3
+					echo "30"; sleep 0.3
+					echo "50"; sleep 0.3
+					echo "70"; sleep 1
+					echo "90"
+					echo "# Ya están listados"
+					echo "100"
+					) |
+					zenity --progress \
+  					--title="Lista de usuarios" \
+  					--text="Iniciando busqueda" \
+  					--percentage=0
+					
+					if [ "$?" = -1 ] ; then
+        					zenity --error \
+          					--text="Cancelado."
+					fi 
+					# Listo los usuarios que no sean del sistema y root
+			 		awk -F: '($3 >= 1000 && $3 <= 2000 || $1 == "root") {print $1}' /etc/passwd
+			 		;;
+			 	esac
+			fi
+		;;
+		2)
+		op1=$(zenity --list \
+  			--column="Opción" --column="Acción" --column="Descripción" \
+  			1 Crear "Buscar procesos" \
+  			2 Borrar "Eliminar procesos" \
+  			3 Listar "Listar procesos")
+  			if [ $? -eq 0 ]
+			then
+			 	case $op1 in
+			 		1)
+			 		;;
+			 		2)
+			 		;;
+			 		3)
+			 		;;
+			 	esac
+			fi
+		;;
+		3)
+			systeminfo
+		;;
+	esac
+else # Si cancela
+	zenity --error \
+       --title="Cancelado" \
+       --width=250 \
+       --text="Se ha <b>Cancelado</b> el proceso"
+	clear
+fi

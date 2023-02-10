@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Introduce lo que quieres analizar: "
+read x
+
+if [ -f $x ]
+then
+	echo "Lo que has introducido es un fichero"
+elif [ -d $x ]
+then
+	echo "Lo que has introducido es un directorio"
+else
+	echo "No es ni fichero ni directorio"
+fi

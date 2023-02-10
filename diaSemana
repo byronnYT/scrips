@@ -1,0 +1,25 @@
+#!/bin/bash
+
+diaSemana=`date +%A`
+
+case $diaSemana in
+	lunes) 
+		echo "Hoy es lunes"
+		
+		;;
+	"martes") 
+		echo "Hoy es martes"
+		;;
+        "miércoles") 
+		echo "Hoy es $diaSemana"
+		;;
+        jueves) 
+		echo "Hoy es $diaSemana"
+		;;
+	viernes) 
+		echo "Hoy es $diaSemana"
+		;;
+	*) 
+		echo "Es fin de semana"
+		;;
+esac

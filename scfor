@@ -1,0 +1,9 @@
+#!/bin/bash
+
+op=0
+
+for i in *
+do
+	echo "El valor de i es $i"
+	#read -p "Introduce opción: " op
+done

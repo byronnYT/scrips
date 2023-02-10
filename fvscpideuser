@@ -1,0 +1,4 @@
+#!/bin/bash
+
+read -p "Introduce nombre de usuario: " user
+./sctestuser $user

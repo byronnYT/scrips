@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	echo "ERR00R 404 --> Parámetro no introducido (./script parámetro)"
+else
+	for i in $*
+	do
+		echo "Identificando usuario... $i"
+		sleep 2
+		id $i 2> /dev/null > /dev/null
+	if [ $? -eq 0 ]
+	then
+		echo "El usuario $i existe"
+	else
+		echo "El usuario $i no existe"
+	fi
+	done
+fi
